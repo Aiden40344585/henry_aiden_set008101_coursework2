@@ -1,0 +1,223 @@
+<!--Aiden Henry 40344585
+// Encryption and Decryption Website HTML file
+// Coursework SET08101 Assesment 2
+
+// Research and Sources for images and tables
+ciphers			https://asecuritysite.com/coding/
+caesar cipher	https://www.khanacademy.org/computing/computer-science/cryptography/crypt/v/caesar-cipher
+vigenere cipher	https://www.geeksforgeeks.org/vigenere-cipher/
+polybius		https://crypto.interactive-maths.com/polybius-square.html
+adfgvx			https://crypto.interactive-maths.com/adfgvx-cipher.html
+morse			http://www.newworldencyclopedia.org/entry/Morse_Code
+caesar image	https://www.amazon.co.uk/Nicolas-Berne-Caesar-Cipher-Wheel/dp/B013KR53SS
+vig table img	https://pages.mtu.edu/~shene/NSF-4/Tutorial/VIG/Vig-Base.html
+adfgvx tabe		https://crypto.interactive-maths.com/adfgvx-cipher.html
+base 64 tab		https://stackabuse.com/encoding-and-decoding-base64-strings-in-node-js/
+polytable img	https://crypto.interactive-maths.com/polybius-square.html
+morse img		https://ieltsonlinetests.com/ielts-recent-actual-test-answers-vol-3-reading-practice-test-5
+-->
+
+<!DOCTYPE html>
+<html>
+<head>  <!-- Defining style sheet and javascript -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <title>Ciper Webpage</title>
+    <script src="javascripts/index.js"></script>
+</head>
+<body>
+    <header>
+    <h1 id="header_1">WebTech SET08101 Coursework 1</h1>
+    </header>
+
+    <div id="dropdown">
+        <button id="drop_button"><b>Cipher Selection</b></button>
+            <div id="dropdown-content">
+            <!-- Kept href as cursor will turn into text editor icon -->
+              <a onclick="caesar_select()">Caesar Cipher</a>
+              <a onclick="viginere_select()">Viginere Cipher</a>
+              <a onclick="adfgvx_select()">ADFGVX Cipher</a>
+              <a onclick="polybius_select()">Polybius Cipher</a>
+              <a onclick="base64_select()">Base 64 Encoding</a>
+              <a onclick="morse_select()">Morse Code</a>
+              <a onclick="templar_select()">Templar Cipher</a>
+              <a onclick="user_select()">User Log In</a>
+            </div>
+    </div>
+    <section id="welcome">
+            <h2>Welcome to the Cipher Website</h2>
+            <img src="images/encryption.jpg" alt="Image of a cipher with key" width="350" height="350">
+            <article>
+                This website will take the text messages you input and through the wonders of 
+                HTML, CSS and JavaScript, turn that into ciphertext to send
+                secrect messages to your friends.  To begin hover your mouse over the Cipher
+                Selection button.  Remember it's hush hush now!
+            </article>
+    </section>
+
+    <section id="users">
+        <h2>User Log In / Register</h2>
+        <img src="images/encryption.jpg" alt="Image of a cipher with key" width="350" height="350">
+        <article>
+            Welcome to the User Log In and Register page.  If you sign in you
+            will automatically be registered and will be able to send secret messages to other users through the magic
+            of JSON. <br>
+        </article>
+        <form id="formAddUser" name="adduser" method="post" action="/adduser">
+            <input id="inputUserName" type="text" placeholder="username" name="username" />
+            <input id="inputUserPwd" type="text" placeholder="password" name="userpwd" />
+            <button class="button" id="btnSubmit" type="submit">Submit</button>
+          </form>
+    </section>
+
+    <section id="logged_in">
+        <p>Enter the user name to send to<input rows="1" cols="100" id="send_to_user"></input></p>
+        <p>Enter the message you wish to send<input rows="2" cols="100" id="sending_message"></input>
+        <p>Recieved messages from other users</p>
+        <p class="cipher_output" id="message_text"></p>
+    </section>
+   
+
+    <section id="caesar">
+        <h2>Caesar Cipher</h2>
+        <img src="images/Caesar_wheel.png" alt="Image of Caesar wheel" width="350" height="350">
+        <article>
+            The Caesar Cipher or Shift Cipher is one of the oldest and 
+            and simplest ciphers.  It is a substitution cipher that will take
+            each letter of the Plaintext and "shift" along the alphabet
+            a pre-determined number of spaces and selects that character 
+            as the Ciphertext.
+        </article>
+       
+        <div id="plaintext_input">
+            <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="caesar_plain_text"></input></p>
+            <p>Please enter the shift value of ciphertext.<br><input rows="1" cols="100" autofocus id="caesar_key_value"></input></p>
+        </div>
+        <button class="button" onclick="caesar();"><b>Start</b></button> 
+        <button class="button" onclick="decrypt_caesar();"><b>Crack</b></button>
+        <p class="cipher_output" id="caesar_cipher_text"></p>
+    </section>
+
+    <section id="viginere">
+        <h2>Viginere Cipher</h2>
+        <img src="images/vig_table.jpg" alt="Image of Vigenere table" width="320" height="320">
+            <article>
+                The Viginere Cipher is a more complicated form of Caesar Cipher.  
+                It encrypts the Plaintext by using a series of interwoven Caesar ciphers based 
+                upon each character of the key word to produce the end Ciphertext.  This
+                cipher was first postulated by Giovan Battista Ballaso but was misattributeted
+                to Blaise de Vigenere, hence the name.
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="viginere_plain_text"></input></p>
+                <p>Please enter the key word for ciphertext.<br><input rows="1" cols="100" id="viginere_key_value"></input></p>
+            </div>
+            <button class="button" onclick="viginere();"><b>Start</b></button>
+            <button class="button" onclick="decrypt_viginere();"><b>Decrypt</b></button>
+            <p class="cipher_output" id="viginere_cipher_text"></p>
+    </section>
+
+
+    <section id="adfgvx">
+        <h2>ADFGVX Cipher</h2>
+        <img src="images/adfgvx_table.jpg" alt="Image of A D F G V X table" width="350" height="350">
+            <article>
+                The ADFGVX Cipher was used by the German Army during World War 1.
+                It is a modified version of the Polybius Cipher which used the characters
+                A D F G V and X.  The reason these letters were chosen is because they
+                are very different from one another in Morse Code.  It was invented by
+                Fritz Nebel and brought into service in 1918.
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="adfgvx_plain_text"></input></p>
+            </div>
+            <button class="button" onclick="adfgvx();"><b>Start</b></button>
+            <button class="button" onclick="decrypt_adfgvx();"><b>Decrypt</b></button>
+            <p class="cipher_output" id="adfgvx_cipher_text"></p>
+    </section>
+
+
+    <section id="polybius">
+        <h2>Polybius Cipher</h2>
+        <img src="images/polybuis_table.jpg" alt="Image of Polybius table" width="350" height="350">
+            <article>
+                The Polybius square is an ancient method for fractionating plaintext so that
+                characters can be represented by a smaller set of symbols.  It was created by
+                Ancient Greeks Cleoxenus and Democleitus and later perfected by the greek
+                historian Polybius.  The most recent use of this method of communication was
+                a modified version called the "Knock Code" by USA POW's in the Vietnam War.
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="polybius_plain_text"></input></p>
+            </div>
+            <button class="button" onclick="polybius();"><b>Start</b></button>
+            <button class="button" onclick="decrypt_polybius();"><b>Decrypt</b></button>
+            <p class="cipher_output" id="polybius_cipher_text"></p>
+    </section>
+
+    
+    <section id="base64">
+        <h2>Base64 Encoding</h2>
+        <img src="images/base64_table.png" alt="Image of Base 64 table" width="350" height="350">
+            <article>
+                Base64 Encoding is a form of binary conversion.  It uses the ASCII format
+                to represent the binary data in a-z, A-Z, 0-9 and the special characters + /, 
+                64 characters in total.  This is not cipher but a way to encode data, it
+                can however be further encrypted using a varity of hashing functions.
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="base64_plain_text"></input></p>
+            </div>
+            <button class="button" onclick="base64();"><b>Start</b></button>
+            <button class="button" onclick="decrypt_base64();"><b>Decrypt</b></button>
+            <p class="cipher_output" id="base64_cipher_text"></p>
+    </section>
+
+    <section id="morse">
+        <h2>Morse Code</h2>
+        <img src="images/morse_table.jpg" alt="Image of Morse Code table" width="300" height="250">
+            <article>
+                Morse Code is a method of character encoding using two different signals, a dot
+                and a dash.  By combining these dots and dashes into various patterns it
+                can encode latin alphabet characters and arabic numerals.  It is named after
+                the inventor of Electronic Telegraph, Samuel Morse.  One of the well known
+                message sent by Morse is ... --- ... S.O.S (Save Our Souls).
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be encrypted or decrypted.<br><input rows="1" cols="100" autofocus id="morse_plain_text"></input></p>
+            </div>
+            <button class="button" onclick="morse_code();"><b>Start</b></button>
+            <button class="button" onclick="decrypt_morse();"><b>Decrypt</b></button>
+            <p class="cipher_output" id="morse_cipher_text"></p>
+    </section>
+
+    <section id="templar">
+        <h2>Templar Cipher</h2>
+        <img src="images/templar_table.jpg" alt="Image of Templar Cipher table" width="350" height="350">
+            <article>
+                The Templar Cipher is a substitution cipher for replacing letters with
+                symbols from the Maltese Cross which was the icon of the Order of the Temple.
+                As a cipher it is almost useless as it is vunerable to frequency analysis to 
+                find the Plaintext.
+            </article>
+    
+            <div id="plaintext_input">
+                <p>Please enter the text to be passed through cipher.<br><input rows="1" cols="100" autofocus id="templar_plain_text"></input></p>
+            </div>
+            <button class="button" onclick="templar();"><b>Start</b></button><br><br>
+            <p class="cipher_output" id="templar_cipher_text"></p>
+    </section>
+
+</body>
+<footer id="foot_id">
+    <p id="foot_text"> <b>
+Webpage created by Aiden Henry 40344585<br>
+Submission for WebTech SET08101 Coursework 1<br>
+Contact information:<i>40344585@napier.ac.uk</i></b></a>.
+    </p>
+</footer>
+</html>
