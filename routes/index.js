@@ -1,3 +1,11 @@
+/* Aiden Henry 40344585
+// Encryption and Decryption Webpage Routes file
+// Coursework SET08101 Assesment 2
+
+Refrences:
+MongoDB           https://docs.mongodb.com/manual/
+Node with mongo   https://closebrace.com/tutorials/2017-03-02/the-dead-simple-step-by-step-guide-for-front-end-developers-to-getting-up-and-running-with-nodejs-express-and-mongodb
+*/
 var express = require('express');
 var router = express.Router();
 
@@ -88,7 +96,7 @@ router.post('/adduser', function(req, res) {
     else if (result != null && result.pwd != userPwd)
     {
       console.log('Incorrect password: ' + result.pwd + ' ' + userPwd)
-      res.render()
+      res.redirect('/')
     }
     else
     {
@@ -124,24 +132,31 @@ router.post('/delete/received', function(req, res){
   // set DB variable.
   var db = req.db;
 
-  // get form values user, message & iteration
-  var recName = req.body.received_from_rec;
-  var userMess = req.body.received_from_mes;
-  var iter = req.body.iter_value;
-
   // set collection.
   var collection = db.get('user_data');
   
-  // Finding if user, finding from and received from is part of DB.
-  console.log(recName)
-  console.log(userMess)
-  console.log(user_ID)
-  console.log(iter)
-  
+  // Find & update user document, pop contents of array 0.
+  // note... no way to use index info to modify array in
+  // mongodb, this way we can remove contents while maintaining
+  // DB integrity.
   collection.findOneAndUpdate({"user": user_ID},
-  {$pull: {"from": recName, "received_message": userMess}},{multi:true}
+  {$pop: {"from": -1, "received_message": -1}},{multi:true}
   );
-  console.log('finished')
+
+  // find user data
+  collection.find({user: user_ID,},
+    function(e,docs){
+      var parsedArray = Object.values(docs[0]);
+      
+      // respond with userlist.ejs and these variables
+      res.render('userlist', {
+        "user" : parsedArray[1],
+        "received_from" : parsedArray[3],
+        "in_message" : parsedArray[4],
+        "sent_to" : parsedArray[5],
+        "out_message" : parsedArray[6]
+        });
+  });
 })
 
 /* Delete messages. C.R.U.DELETE */
@@ -150,18 +165,27 @@ router.post('/delete/sent', function(req, res){
   // set DB variable.
   var db = req.db;
 
-  // get form values.
-  var userName = req.body.sent_to_rec;
-  var userMess = req.body.sent_to_mes;
-
   // set collection.
   var collection = db.get('user_data');
-  console.log(userName)
-  console.log(userMess)
-
+  
   collection.update({"user": user_ID},
-  {$pull: {"to": userName, "sent_message": userMess}},{multi:true}
+  {$pop: {"to": -1, "sent_message": -1}},{multi:true}
   );
-})
+  // find user data
+  collection.find({user: user_ID,},
+    function(e,docs){
+      var parsedArray = Object.values(docs[0]);
+      
+      // respond with userlist.ejs and these variables
+      res.render('userlist', {
+        "user" : parsedArray[1],
+        "received_from" : parsedArray[3],
+        "in_message" : parsedArray[4],
+        "sent_to" : parsedArray[5],
+        "out_message" : parsedArray[6]
+        });
+    });
+  });
+
 
 module.exports = router;

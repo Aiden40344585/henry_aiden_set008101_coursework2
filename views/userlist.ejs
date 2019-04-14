@@ -1,29 +1,6 @@
-<!--
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>User List</title>
-    <link rel='stylesheet' href='/stylesheets/userlist.css' />
-  </head>
-  <body>
-    <h1>User List</h1>
-    <ul>
-      <%
-        //var list = '';
-        //for (i = 0; i < userlist.length; i++) {
-        //  list += '<li>' + userlist[i].user + '</a></li>';
-        //}
-        //return list;
-      %>
-    </ul>
-  </body>
-</html>
-
--->
 
 <!--Aiden Henry 40344585
-// Encryption and Decryption Website HTML file
+// Encryption and Decryption Website USERLIST HTML file
 // Coursework SET08101 Assesment 2
 
 // Research and Sources for images and tables
@@ -39,6 +16,9 @@ adfgvx tabe		https://crypto.interactive-maths.com/adfgvx-cipher.html
 base 64 tab		https://stackabuse.com/encoding-and-decoding-base64-strings-in-node-js/
 polytable img	https://crypto.interactive-maths.com/polybius-square.html
 morse img		https://ieltsonlinetests.com/ielts-recent-actual-test-answers-vol-3-reading-practice-test-5
+
+EJS javascript  https://ejs.co/
+MongoDB         https://docs.mongodb.com/manual/
 -->
 
 <!DOCTYPE html>
@@ -72,7 +52,7 @@ morse img		https://ieltsonlinetests.com/ielts-recent-actual-test-answers-vol-3-r
           
             </div>
     </div>
-
+    
     <section id="caesar">
         <h2>Caesar Cipher</h2>
         <img src="/images/Caesar_wheel.png" alt="Image of Caesar wheel" width="350" height="350">
@@ -227,38 +207,35 @@ morse img		https://ieltsonlinetests.com/ielts-recent-actual-test-answers-vol-3-r
                 <tr id="received_table">
                     <th>FROM</th>
                     <th>MESSAGE</th>
-                    <th>DELETE</th>  
-                </tr>
+                    <td>
+                        <form id="delete_message" method="post" action="/delete/received">
+                            <button class="button" name="delete" type="submit">Delete</button>  
+                        </form>
+                    </td>
+                </tr>   
                 <% for (i=0; i < received_from.length; i++){ %>
                 <tr>
-                    <form id="delete_message" method="post" action="/delete/received">
-                        <td><%= received_from[i] %></td>
-                        <input type="hidden" name="received_from_rec" value=<%= received_from[i] %>>
-                        <td><%= in_message[i] %></td>
-                        <input type="hidden" name="received_from_mes" value=<%= in_message[i] %>>
-                        <% var iter_number = i %>
-                        <input type="hidden" name="iter_value" value=<%= iter_number %> >
-                        
-                        <td><button class="button" type="submit">Delete</button></td>
-                    </form>
+                    <td><%= received_from[i] %></td>
+                    <td><%= in_message[i] %></td>
+
                 </tr>
                 <% } %>
             </table>
             <table id="sent_message_table">
-                <tr colspan=3 id="sent_table">
-                    <th>TO</th>
+                <tr id="sent_table">
+                    <th>TO USER</th>
                     <th>MESSAGE</th>
-                    <th>DELETE</th>
+                    <th>
+                        <form id="delete_message" method="post" action="/delete/sent">
+                            <button class="button" name="delete" type="submit">Delete</button>
+                        </form>
+                    </th>
+                  
                 </tr>
                 <% for (i=0; i < sent_to.length; i++){ %>
-                <tr>
-                    <form id="delete_message" method="post" action="/delete/sent">
+                <tr>          
                         <td><%= sent_to[i] %></td>
-                        <input type="hidden" name="sent_to_rec" value=<%= sent_to[i] %>>
                         <td><%= out_message[i] %></td>
-                        <input type="hidden" name="sent_to_mes" value=<%= out_message[i] %>>
-                        <td><button class="button" type="submit">Delete</button></td>
-                    </form>
                 </tr>
                 <% } %>
             </table>

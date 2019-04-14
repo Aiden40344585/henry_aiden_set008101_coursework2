@@ -1,3 +1,5 @@
+/* html table reference https://www.w3schools.com/css/css_table.asp */
+
 header
 {
     text-align: center;
@@ -231,24 +233,47 @@ footer
 #received_message_table
 {
 
+    margin-left: auto;
+    margin-right: auto;
     display: none;
-    border: 3px solid darkgreen;
-
 }
-#received_table
+#received_message_table td, #received_message_table th
 {
-    display: block;
+    border: 1px solid darkgreen;
+    padding: 8px;  
 }
+#received_message_table tr:nth-child(even){background-color: lightgray;}
+#received_message_table tr:hover {background-color:whitesmoke;};
 
+#received_message_table th
+{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: darkgreen;
+    color: whitesmoke;
+}
 
 #sent_message_table
 {
+
+    margin-left: auto;
+    margin-right: auto;
     display: none;
-    border: 3px solid darkgreen;
 }
-
-#sent_table
+#sent_message_table td, #sent_message_table th 
 {
+    border: 1px solid darkgreen;
+    padding: 8px;
+}
+#sent_message_table tr:nth-child(even){background-color: lightgray;}
+#sent_message_table tr:hover {background-color:whitesmoke;};
 
-    display: block;
+#sent_message_table th 
+{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: darkgreen;
+    color: whitesmoke;
 }

@@ -1,6 +1,6 @@
 // Aiden Henry 40344585
-// Encryption and Decryption Website JavaScript file
-// Coursework SET08101 Assesment 1
+// Encryption and Decryption Website INDEX JavaScript file
+// Coursework SET08101 Assesment 2
 
 // Research and Sources
 // js slice arrays		https://www.w3schools.com/jsref/jsref_slice_array.asp
